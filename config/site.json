@@ -1,0 +1,14 @@
+{
+  "title": "Urbano Vitolo | Estudio Jurídico",
+  "description": "Presenta los servicios del estudio jurídico Urbano Vitolo y facilita consultas por WhatsApp, ayudando a clientes a encontrar asesoramiento legal y conocer sus opciones.",
+  "language": "es",
+  "robots": {
+    "index": false
+  },
+  "icons": {
+    "icon": "/favicon.png"
+  },
+  "accessibility": {
+    "addBypassLinks": false
+  }
+}
