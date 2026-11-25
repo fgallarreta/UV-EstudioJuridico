@@ -66,7 +66,7 @@ export default function App() {
             <small>Abogados · Mat. Prof. 12345</small>
           </a>
           <a className="header-logo" href="#inicio" aria-label="Urbano Vitolo Estudio Jurídico">
-            <img src="/urbano-vitolo-logo-transparent.png" alt="" />
+            <img src={`${import.meta.env.BASE_URL}urbano-vitolo-logo-transparent.png`} alt="" />
           </a>
           <a className="header-cta" href="#contacto">
             Consultar
@@ -214,7 +214,7 @@ export default function App() {
       </main>
 
       <footer>
-        <img src="/urbano-vitolo-logo-transparent.png" alt="Urbano Vitolo Estudio Jurídico" />
+        <img src={`${import.meta.env.BASE_URL}urbano-vitolo-logo-transparent.png`} alt="Urbano Vitolo Estudio Jurídico" />
         <div>
           <p>Urbano Vitolo · Estudio Jurídico</p>
           <small>Asesoramiento legal con compromiso y cercanía.</small>
