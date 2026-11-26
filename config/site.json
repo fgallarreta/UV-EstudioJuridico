@@ -1,9 +1,10 @@
 {
   "title": "Urbano Vitolo | Estudio Jurídico",
-  "description": "Presenta los servicios del estudio jurídico Urbano Vitolo y facilita consultas por WhatsApp, ayudando a clientes a encontrar asesoramiento legal y conocer sus opciones.",
+  "description": "Estudio jurídico Urbano Vitolo. Asesoramiento laboral, civil, daños y perjuicios, familia, sucesiones y empresas. Atención clara y personalizada.",
+  "siteUrl": "https://fgallarreta.github.io/UV-EstudioJuridico/",
   "language": "es",
   "robots": {
-    "index": false
+    "index": true
   },
   "icons": {
     "icon": "/favicon.png"

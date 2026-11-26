@@ -9,6 +9,12 @@ const services = [
     detail:
       "Intervenimos tanto en la prevención como en la resolución de conflictos laborales, acompañando a trabajadores y empleadores con una estrategia clara.",
     solutions: ["Despidos y desvinculaciones", "Accidentes y enfermedades laborales", "Liquidaciones e indemnizaciones", "Intercambio telegráfico", "Conciliaciones laborales", "Asesoramiento preventivo"],
+    documents: ["Recibos de sueldo y constancias de registración", "Telegramas, cartas documento y comunicaciones", "Contrato o datos del vínculo laboral", "Certificados médicos o constancias del accidente, si corresponde"],
+    process: [
+      { title: "Ordenamos el vínculo", description: "Revisamos tareas, fechas, comunicaciones y la documentación laboral disponible." },
+      { title: "Evaluamos opciones", description: "Analizamos el conflicto y los caminos posibles según tu situación." },
+      { title: "Definimos los pasos", description: "Acordamos cómo avanzar y qué documentación o gestiones pueden hacer falta." },
+    ],
   },
   {
     number: "02",
@@ -20,6 +26,12 @@ const services = [
     detail:
       "Abordamos conflictos entre particulares y protegemos tus intereses patrimoniales mediante soluciones jurídicas sólidas y sostenibles.",
     solutions: ["Redacción y revisión de contratos", "Conflictos patrimoniales", "Propiedad y posesión", "Cobro de deudas", "Incumplimientos contractuales", "Mediaciones y acuerdos"],
+    documents: ["Contratos, presupuestos o acuerdos relacionados", "Comprobantes de pagos, deudas o gastos", "Mensajes y comunicaciones entre las partes", "Escrituras u otra documentación del bien, si corresponde"],
+    process: [
+      { title: "Entendemos el conflicto", description: "Identificamos a las partes, los acuerdos y qué resultado estás buscando." },
+      { title: "Revisamos antecedentes", description: "Analizamos contratos, comunicaciones y documentación patrimonial pertinente." },
+      { title: "Buscamos una salida", description: "Evaluamos alternativas de negociación, mediación o las acciones que correspondan." },
+    ],
   },
   {
     number: "03",
@@ -31,6 +43,12 @@ const services = [
     detail:
       "Analizamos el alcance del daño, reunimos la documentación necesaria y reclamamos la reparación integral que corresponde.",
     solutions: ["Accidentes de tránsito", "Lesiones y accidentes personales", "Daño material y moral", "Reclamos ante aseguradoras", "Responsabilidad civil", "Negociaciones y juicios"],
+    documents: ["Fotos, videos y datos de testigos, si los hay", "Constancias médicas y estudios relacionados", "Denuncia, datos del otro involucrado y de la aseguradora", "Comprobantes de gastos, reparaciones o daños"],
+    process: [
+      { title: "Registramos lo ocurrido", description: "Armamos una cronología del hecho y reunimos la información disponible." },
+      { title: "Documentamos los daños", description: "Revisamos constancias médicas, materiales y gastos vinculados al caso." },
+      { title: "Evaluamos el reclamo", description: "Conversamos sobre alternativas y próximos pasos según los antecedentes." },
+    ],
   },
   {
     number: "04",
@@ -42,6 +60,12 @@ const services = [
     detail:
       "Brindamos contención y claridad jurídica para transitar procesos familiares y sucesorios de la manera más ordenada posible.",
     solutions: ["Sucesiones testamentarias", "Sucesiones intestadas", "Divorcio de común acuerdo", "Divorcio unilateral", "Convenios reguladores", "División de bienes"],
+    documents: ["DNI y datos de las personas involucradas", "Partidas o certificados familiares que tengas disponibles", "Testamento o información sobre bienes, si corresponde", "Acuerdos previos y documentación sobre bienes o responsabilidades familiares"],
+    process: [
+      { title: "Escuchamos a la familia", description: "Conversamos sobre la situación, las personas involucradas y tus prioridades." },
+      { title: "Revisamos la información", description: "Identificamos qué documentación existe y qué cuestiones necesitan ordenarse." },
+      { title: "Acordamos cómo avanzar", description: "Evaluamos alternativas para llevar adelante el trámite con claridad y cuidado." },
+    ],
   },
   {
     number: "05",
@@ -53,6 +77,12 @@ const services = [
     detail:
       "Trabajamos junto a empresas y emprendimientos para anticipar riesgos, ordenar relaciones comerciales y acompañar su crecimiento.",
     solutions: ["Contratos comerciales", "Constitución de sociedades", "Conflictos societarios", "Asesoramiento corporativo", "Negociaciones comerciales", "Prevención de contingencias"],
+    documents: ["Contratos, órdenes de compra y facturas relacionadas", "Estatuto, actas o documentación societaria disponible", "Comunicaciones y acuerdos con clientes, proveedores o socios", "Descripción de la actividad y del objetivo de la consulta"],
+    process: [
+      { title: "Conocemos la operación", description: "Entendemos la actividad, las partes involucradas y el objetivo comercial." },
+      { title: "Detectamos necesidades", description: "Revisamos contratos y documentación para identificar temas a resolver o prevenir." },
+      { title: "Proponemos alternativas", description: "Definimos próximos pasos que acompañen la operación y sus prioridades." },
+    ],
   },
   {
     number: "06",
@@ -64,6 +94,12 @@ const services = [
     detail:
       "Si tu situación no encaja en una categoría tradicional, la estudiamos de manera integral para identificar el camino jurídico adecuado.",
     solutions: ["Evaluación inicial del caso", "Investigación jurídica", "Diseño de estrategia", "Mediación y negociación", "Derivación especializada", "Seguimiento personalizado"],
+    documents: ["Una breve cronología de lo ocurrido", "Contratos, notificaciones o expedientes que tengas", "Mensajes y comunicaciones relacionados", "Comprobantes u otros antecedentes que ayuden a entender el caso"],
+    process: [
+      { title: "Nos contás qué pasó", description: "Empezamos por tu relato, tus dudas y lo que necesitás resolver." },
+      { title: "Identificamos el tema", description: "Revisamos los antecedentes para entender qué aspectos jurídicos pueden estar involucrados." },
+      { title: "Trazamos un camino", description: "Te explicamos alternativas y, si hace falta, cómo continuar con asesoramiento específico." },
+    ],
   },
 ];
 
@@ -121,10 +157,10 @@ function ServiceDetail({ service }: { service: Service }) {
         <section className="detail-content">
           <div className="detail-intro">
             <p className="section-label">Cómo podemos ayudarte</p>
-            <h2>Una estrategia para tu situación.</h2>
+            <h2>Alternativas para tu situación.</h2>
             <p>
-              Cada caso requiere una mirada particular. Primero escuchamos, luego analizamos la documentación y
-              te presentamos alternativas concretas para avanzar.
+              Estos son algunos de los temas que trabajamos dentro de esta área. Revisamos cada consulta según
+              sus circunstancias y te explicamos las opciones disponibles.
             </p>
           </div>
           <div className="solution-list">
@@ -137,24 +173,32 @@ function ServiceDetail({ service }: { service: Service }) {
           </div>
         </section>
 
+        <section className="detail-documents">
+          <div className="detail-documents-intro">
+            <p className="section-label">Para la primera consulta</p>
+            <h2>¿Qué información puede ayudar?</h2>
+            <p>
+              Esta lista es orientativa. No hace falta que tengas todo para conversar: contanos qué pasó y te
+              indicamos qué sería útil reunir para tu situación.
+            </p>
+          </div>
+          <ul className="document-list">
+            {service.documents.map((document) => (
+              <li key={document}>{document}</li>
+            ))}
+          </ul>
+        </section>
+
         <section className="detail-process">
-          <p className="section-label">Nuestro proceso</p>
+          <p className="section-label">Cómo abordamos esta área</p>
           <div className="process-grid">
-            <article>
-              <span>01</span>
-              <h3>Escuchamos</h3>
-              <p>Nos contás tu situación y revisamos la información inicial.</p>
-            </article>
-            <article>
-              <span>02</span>
-              <h3>Analizamos</h3>
-              <p>Estudiamos las alternativas, los tiempos y los posibles escenarios.</p>
-            </article>
-            <article>
-              <span>03</span>
-              <h3>Actuamos</h3>
-              <p>Definimos juntos una estrategia y te acompañamos en cada paso.</p>
-            </article>
+            {service.process.map((step, index) => (
+              <article key={step.title}>
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                <h3>{step.title}</h3>
+                <p>{step.description}</p>
+              </article>
+            ))}
           </div>
         </section>
 

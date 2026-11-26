@@ -36,6 +36,7 @@ export default defineConfig(({ mode }) => {
 type SiteConfiguration = {
   title?: string;
   description?: string;
+  siteUrl?: string;
   language?: string;
   robots?: {
     index?: boolean;
@@ -76,32 +77,56 @@ function siteConfiguration(config: SiteConfiguration): Plugin {
   const description = config.description ?? "";
   const favicon = config.icons?.icon ?? "/favicon.png";
   const socialImage = config.openGraph?.image ?? "";
+  const siteUrl = config.siteUrl?.replace(/\/?$/, "/") ?? "";
+  const canIndex = config.robots?.index !== false;
+  const sitemapUrl = siteUrl && canIndex ? new URL("sitemap.xml", siteUrl).toString() : "";
   const language = sanitizeHtmlValue(config.language) || "es";
   const googleAnalyticsId = sanitizeHtmlValue(config.analytics?.googleAnalyticsId);
   const headStart = config.customScripts?.headStart ?? "";
   const headEnd = config.customScripts?.headEnd ?? "";
   const bodyStart = config.customScripts?.bodyStart ?? "";
   const bodyEnd = config.customScripts?.bodyEnd ?? "";
-  const robotsTxt = config.robots?.index === false ? "User-agent: *\nDisallow: /\n" : "";
+  const robotsTxt =
+    config.robots?.index === false
+      ? "User-agent: *\nDisallow: /\n"
+      : `User-agent: *\nAllow: /\n${sitemapUrl ? `Sitemap: ${sitemapUrl}\n` : ""}`;
+  const sitemapXml = siteUrl && canIndex
+    ? `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>${siteUrl}</loc></url></urlset>\n`
+    : "";
 
   return {
     name: "site-configuration",
     configureServer(server) {
       server.middlewares.use((req, res, next) => {
-        if (!robotsTxt || req.url?.split("?")[0] !== "/robots.txt") return next();
-
-        res.setHeader("Content-Type", "text/plain; charset=utf-8");
-        res.end(robotsTxt);
+        const pathname = req.url?.split("?")[0];
+        if (!canIndex && pathname === "/robots.txt") {
+          res.setHeader("Content-Type", "text/plain; charset=utf-8");
+          res.end(robotsTxt);
+          return;
+        }
+        if (pathname === "/sitemap.xml" && sitemapXml) {
+          res.setHeader("Content-Type", "application/xml; charset=utf-8");
+          res.end(sitemapXml);
+          return;
+        }
+        return next();
       });
     },
     generateBundle() {
-      if (!robotsTxt) return;
-
-      this.emitFile({
-        type: "asset",
-        fileName: "robots.txt",
-        source: robotsTxt,
-      });
+      if (!canIndex) {
+        this.emitFile({
+          type: "asset",
+          fileName: "robots.txt",
+          source: robotsTxt,
+        });
+      }
+      if (sitemapXml) {
+        this.emitFile({
+          type: "asset",
+          fileName: "sitemap.xml",
+          source: sitemapXml,
+        });
+      }
     },
     transformIndexHtml: {
       order: "pre",
@@ -122,15 +147,26 @@ function siteConfiguration(config: SiteConfiguration): Plugin {
             injectTo: "head",
           });
         }
-        if (config.robots?.index === false) {
-          tags.push({
-            tag: "meta",
-            attrs: { name: "robots", content: "noindex, nofollow" },
-            injectTo: "head",
-          });
+        tags.push({
+          tag: "meta",
+          attrs: {
+            name: "robots",
+            content: config.robots?.index === false ? "noindex, nofollow" : "index, follow",
+          },
+          injectTo: "head",
+        });
+        if (siteUrl) {
+          tags.push(
+            { tag: "link", attrs: { rel: "canonical", href: siteUrl }, injectTo: "head" },
+            { tag: "meta", attrs: { property: "og:url", content: siteUrl }, injectTo: "head" },
+            { tag: "meta", attrs: { property: "og:type", content: "website" }, injectTo: "head" },
+            { tag: "meta", attrs: { property: "og:locale", content: "es_AR" }, injectTo: "head" },
+            { tag: "meta", attrs: { name: "twitter:card", content: "summary" }, injectTo: "head" },
+          );
         }
         if (favicon) {
-          tags.push({ tag: "link", attrs: { rel: "icon", href: favicon }, injectTo: "head" });
+          const faviconUrl = siteUrl ? new URL(favicon.replace(/^\/+/, ""), siteUrl).toString() : favicon;
+          tags.push({ tag: "link", attrs: { rel: "icon", href: faviconUrl }, injectTo: "head" });
         }
         if (title) {
           tags.push({
@@ -147,10 +183,13 @@ function siteConfiguration(config: SiteConfiguration): Plugin {
           });
         }
         if (socialImage) {
+          const socialImageUrl = siteUrl
+            ? new URL(socialImage.replace(/^\/+/, ""), siteUrl).toString()
+            : socialImage;
           tags.push(
             {
               tag: "meta",
-              attrs: { property: "og:image", content: socialImage },
+              attrs: { property: "og:image", content: socialImageUrl },
               injectTo: "head",
             },
             {
@@ -160,7 +199,7 @@ function siteConfiguration(config: SiteConfiguration): Plugin {
             },
             {
               tag: "meta",
-              attrs: { name: "twitter:image", content: socialImage },
+              attrs: { name: "twitter:image", content: socialImageUrl },
               injectTo: "head",
             },
           );
